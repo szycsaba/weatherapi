@@ -20,9 +20,9 @@ class WeatherInfoResource extends JsonResource
             'name' => $this->name,
             'lat' => $this->lat,
             'lon' => $this->lon,
-            'temperature' => $this->temp_c,
-            'temp_min' => $this->temp_min_c,
-            'temp_max' => $this->temp_max_c,
+            'temperature' => $this->temperature,
+            'temp_min' => $this->temp_min,
+            'temp_max' => $this->temp_max,
             'pressure' => $this->pressure,
             'humidity' => $this->humidity,
         ];

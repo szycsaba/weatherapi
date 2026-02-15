@@ -35,4 +35,25 @@ class WeatherInfoService
             );
         }
     }
+
+    public function getStoredWeatherInfos(?int $page = null): ServiceResponse
+    {
+        try {
+            $weatherInfos = $this->repo->getStoredWeatherInfos($page);
+
+            return new ServiceResponse(
+                success: true,
+                message: 'Weather infos listed successfully',
+                data: WeatherInfoResource::collection($weatherInfos)->resolve(),
+                status: 200
+            );
+        } catch (QueryException $e) {
+            Log::error('An error occurred while fetching weather infos: ' . $e->getMessage());
+            return new ServiceResponse(
+                success: false,
+                message: 'An error occurred while fetching weather infos',
+                status: 500
+            );
+        }
+    }
 }

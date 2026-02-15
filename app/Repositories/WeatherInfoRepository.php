@@ -26,4 +26,18 @@ class WeatherInfoRepository implements WeatherInfoRepositoryInterface
 
         return $weatherInfo->refresh();
     }
+
+    public function getStoredWeatherInfos(?int $page = null): Collection
+    {
+        $limit = 20;
+
+        if ($page === null) {
+            return WeatherInfo::take($limit)->get();
+        }
+
+        $page = max(1, $page);
+        $offset = ($page - 1) * $limit;
+
+        return WeatherInfo::skip($offset)->take($limit)->get();
+    }
 }
