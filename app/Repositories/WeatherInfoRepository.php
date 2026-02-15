@@ -40,4 +40,15 @@ class WeatherInfoRepository implements WeatherInfoRepositoryInterface
 
         return WeatherInfo::skip($offset)->take($limit)->get();
     }
+
+    public function getLast24HoursByCityName(string $cityName): Collection
+    {
+        $from = Carbon::now()->subDay();
+
+        $cityNameLower = mb_strtolower($cityName, 'UTF-8');
+
+        return WeatherInfo::whereRaw('LOWER(name) = ?', [$cityNameLower])
+            ->where('time', '>=', $from)
+            ->get();
+    }
 }

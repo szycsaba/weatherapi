@@ -56,4 +56,28 @@ class WeatherInfoService
             );
         }
     }
+
+    public function getLast24HoursByCityName(string $cityName): ServiceResponse
+    {
+        try {
+            $cityName = urldecode($cityName);
+            $cityName = trim($cityName);
+
+            $weatherInfos = $this->repo->getLast24HoursByCityName($cityName);
+
+            return new ServiceResponse(
+                success: true,
+                message: 'Weather infos listed successfully',
+                data: WeatherInfoResource::collection($weatherInfos)->resolve(),
+                status: 200
+            );
+        } catch (QueryException $e) {
+            Log::error('An error occurred while fetching weather infos: ' . $e->getMessage());
+            return new ServiceResponse(
+                success: false,
+                message: 'An error occurred while fetching weather infos',
+                status: 500
+            );
+        }
+    }
 }

@@ -16,4 +16,11 @@ class WeatherController extends Controller
 
         return response()->json($response->toArray(), $response->status);
     }
+
+    public function getLast24HoursByCityName(WeatherInfoService $weatherInfoService, string $city): JsonResponse
+    {
+        $response = $weatherInfoService->getLast24HoursByCityName($city);
+
+        return response()->json($response->toArray(), $response->status);
+    }
 }
